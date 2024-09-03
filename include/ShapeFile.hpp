@@ -29,16 +29,18 @@ class ShapeFile {
         ShapeFile(
             ShapeType _shapeType,
             vector<vector<double>> boundingBox,
-            vector<Record> records
+            vector<Record> _records
         );
 
         // Getters
         uint32_t getFileCode();
         uint32_t getLength(bool words);
+        uint32_t getLength();
         uint32_t getVersion();
-        uint32_t getShapeType();
+        ShapeType getShapeType();
 
-        vector<double> getBoundingBox();
+        vector<double> getBoundingBoxMin();
+        vector<double> getBoundingBoxMax();
         vector<Record> getRecords();
 };
 
