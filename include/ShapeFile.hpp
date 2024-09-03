@@ -8,14 +8,18 @@
 #ifndef _SHAPEFILE_HPP_
 #define _SHAPEFILE_HPP_
 
+#define ESRI_INTEGER 4
+#define ESRI_DOUBLE 8
+
 using namespace std;
+
 
 class ShapeFile {
     private:
         // Header Information
-        uint32_t fileCode;
-        uint32_t fileLength;
-        uint32_t version;
+        int32_t fileCode;
+        int32_t fileLength;
+        int32_t version;
 
         ShapeType shapeType;
 
@@ -33,10 +37,10 @@ class ShapeFile {
         );
 
         // Getters
-        uint32_t getFileCode();
-        uint32_t getLength(bool words);
-        uint32_t getLength();
-        uint32_t getVersion();
+        int32_t getFileCode();
+        int32_t getLength(bool words);
+        int32_t getLength();
+        int32_t getVersion();
         ShapeType getShapeType();
 
         vector<double> getBoundingBoxMin();
