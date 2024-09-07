@@ -9,9 +9,6 @@
 #ifndef _SHAPEFILE_HPP_
 #define _SHAPEFILE_HPP_
 
-#define ESRI_INTEGER 4
-#define ESRI_DOUBLE 8
-
 using namespace std;
 
 enum ShapeType {

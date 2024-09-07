@@ -29,6 +29,15 @@ int main()
     }
 
     cout << ")" << endl;
+
+    vector<Record> records = shapeFile.getRecords();
+
+    cout << "Records: " << endl << "\t";
+
+    for (Record record : records) {
+        cout << "Record Number: " << record.getNumber() << "    Record Length: " << record.getLength() << endl << "\t";
+    }
+    cout << endl;
     
     return 0;
 }
