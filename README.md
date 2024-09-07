@@ -1,0 +1,3 @@
+# GeoBishtu
+
+My crack at making an ESRI Shape File reader in C++...
