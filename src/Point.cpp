@@ -6,7 +6,7 @@ using namespace std;
 Point::Point(FILE *shapeFile) {
     double _x;
     fread(&_x, ESRI_DOUBLE, 1, shapeFile);
-    
+
     double _y;
     fread(&_y, ESRI_DOUBLE, 1, shapeFile);
 
