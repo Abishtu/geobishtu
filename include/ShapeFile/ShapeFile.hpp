@@ -30,7 +30,7 @@ enum ShapeType {
 
 class ShapeFile {
     private:
-        // Header Information
+        // Header Information : 100 bytes
         int32_t fileCode;
         int32_t fileLength;
         int32_t version;
@@ -40,6 +40,7 @@ class ShapeFile {
         vector<double> boundingBoxMax;
         vector<double> boundingBoxMin;
 
+        // Content : len - 100
         vector<Record> records;
     public:
         // Constructors

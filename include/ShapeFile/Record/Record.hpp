@@ -6,6 +6,7 @@
 
 class Record {
     protected:
+        // Record Header
         int32_t number;
         int32_t length;
 
