@@ -7,17 +7,18 @@
 
 using namespace std;
 
-class Point {
-    private:
-        double x;
-        double y;
-    public:
-        Point(FILE *shapeFile);
-        Point(double x, double y);
+namespace Records {
+    class Point {
+        private:
+            double x;
+            double y;
+        public:
+            Point(FILE *shapeFile);
+            Point(double x, double y);
 
-        vector<double> getPoint();
-        double getX();
-        double getY();
-};
-
+            vector<double> getPoint();
+            double getX();
+            double getY();
+    };
+}
 #endif

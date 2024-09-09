@@ -2,7 +2,7 @@
 #include <Util.hpp>
 
 using namespace std;
-
+using namespace Records;
 Point::Point(FILE *shapeFile) {
     double _x;
     fread(&_x, ESRI_DOUBLE, 1, shapeFile);

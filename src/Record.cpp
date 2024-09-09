@@ -6,6 +6,7 @@
 #include <Util.hpp>
 
 using namespace std;
+using namespace Records;
 
 Record::Record(FILE *shapeFile) {
     this->readHeader(shapeFile);

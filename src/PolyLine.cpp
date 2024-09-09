@@ -4,6 +4,7 @@
 #include <Util.hpp>
 
 using namespace std;
+using namespace Records;
 
 PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
     int32_t _shapeType;
@@ -51,6 +52,10 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
             cerr << "Failed to read PolyLine part " << partCount + 1 << endl;
             exit(EXIT_FAILURE); 
         }
+    }
+
+    for (int pointCount = 0; pointCount < this->numPoints; pointCount++) {
+        this->points.push_back(Point(shapeFile));
     }
 }
 

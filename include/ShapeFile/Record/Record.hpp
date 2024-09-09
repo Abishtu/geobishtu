@@ -3,8 +3,8 @@
 
 #ifndef _RECORD_HPP_
 #define _RECORD_HPP_
-
-class Record {
+namespace Records {
+    class Record {
     protected:
         // Record Header
         int32_t number;
@@ -16,6 +16,7 @@ class Record {
 
         int32_t getNumber();
         int32_t getLength();
-};
+    };
+}
 
 #endif

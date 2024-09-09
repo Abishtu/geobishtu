@@ -1,5 +1,7 @@
 #include <iostream>
 #include <ShapeFile/ShapeFile.hpp>
+#include <ShapeFile/Record/Point.hpp>
+#include <ShapeFile/Record/PolyLine.hpp>
 
 using namespace std;
 
@@ -30,14 +32,23 @@ int main()
 
     cout << ")" << endl;
 
-    vector<Record> records = shapeFile.getRecords();
+    auto records = shapeFile.getRecords();
 
     cout << "Records: " << endl << "\t";
 
-    for (Record record : records) {
+    for (Records::Record record : records) {
         cout << "Record Number: " << record.getNumber() << "    Record Length: " << record.getLength() << endl << "\t";
     }
     cout << endl;
+
+    for (size_t i = 0; i < records.size(); i++) {
+        Records::Record object = records.at(i);
+        
+        Records::PolyLine polyLine = reinterpret_cast<Records::PolyLine&>(object);
+        for (Records::Point point : polyLine.getPoints()) {
+            cout << "\t" << point.getX() << ", " << point.getY() << endl;
+        }
+    }
     
     return 0;
 }

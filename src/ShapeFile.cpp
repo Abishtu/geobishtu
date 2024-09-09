@@ -5,6 +5,7 @@
 
 #include <ShapeFile/ShapeFile.hpp>
 #include <ShapeFile/Record/Record.hpp>
+#include <ShapeFile/Record/PolyLine.hpp>
 #include <Util.hpp>
 
 using namespace std;
@@ -80,12 +81,12 @@ ShapeFile::ShapeFile(string filePath) {
     
     // int32_t contentLength = this->getLength() - ((int32_t)100);
 
-    this->records.push_back(Record(shapeFile));
+    this->records.push_back(Records::PolyLine(shapeFile));
 }
 
 ShapeFile::ShapeFile(ShapeType _shapeType,
                      vector<vector<double>> boundingBox,
-                     vector<Record> _records) {
+                     vector<Records::Record> _records) {
     this->shapeType = _shapeType;
     this->boundingBoxMin = boundingBox[0];
     this->boundingBoxMax = boundingBox[1];
@@ -120,6 +121,6 @@ vector<double> ShapeFile::getBoundingBoxMax() {
     return this->boundingBoxMax;
 }
 
-vector<Record> ShapeFile::getRecords() {
+vector<Records::Record> ShapeFile::getRecords() {
     return this->records;
 }

@@ -41,14 +41,14 @@ class ShapeFile {
         vector<double> boundingBoxMin;
 
         // Content : len - 100
-        vector<Record> records;
+        vector<Records::Record> records;
     public:
         // Constructors
         ShapeFile(string filePath);
         ShapeFile(
             ShapeType _shapeType,
             vector<vector<double>> boundingBox,
-            vector<Record> _records
+            vector<Records::Record> _records
         );
 
         // Getters
@@ -60,7 +60,7 @@ class ShapeFile {
 
         vector<double> getBoundingBoxMin();
         vector<double> getBoundingBoxMax();
-        vector<Record> getRecords();
+        vector<Records::Record> getRecords();
 };
 
 #endif
