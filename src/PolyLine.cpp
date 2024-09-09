@@ -5,7 +5,7 @@
 
 using namespace std;
 
-PolyLine::PolyLine(FILE *shapeFile) {
+PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
     int32_t _shapeType;
     size_t err = fread(&_shapeType, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {

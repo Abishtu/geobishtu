@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class PolyLine : Record {
+class PolyLine : public Record {
     private:
         int32_t shapeType;
         
@@ -31,8 +31,8 @@ class PolyLine : Record {
             vector<Point> points
         );
 
-        vector<double> boundingBoxMin();
-        vector<double> boundingBoxMax();
+        vector<double> getBoundingBoxMin();
+        vector<double> getBoundingBoxMax();
 
         int32_t getNumParts();
         int32_t getNumPoints();
