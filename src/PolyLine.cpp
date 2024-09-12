@@ -7,11 +7,11 @@ using namespace std;
 using namespace Records;
 
 PolyLine::~PolyLine() {
-    
+
 }
 
-PolyLine::PolyLine(FILE *shapeFile) : Record() {
-    readHeader(shapeFile);
+PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
+    // readHeader(shapeFile);
     int32_t _shapeType;
     size_t err = fread(&_shapeType, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {

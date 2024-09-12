@@ -79,10 +79,14 @@ ShapeFile::ShapeFile(string filePath) {
     double bbMmax;
     err = fread(&bbMmax, ESRI_DOUBLE, 1, shapeFile);
     this->boundingBoxMax.push_back(bbMmax);
-    // int32_t contentLength = this->getLength() - ((int32_t)100);
-    this->records.push_back(
-        shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile))
-    );
+    while(true) {
+        if (feof(shapeFile) == 1) {
+            cerr << "EOF Reached at " << ftell(shapeFile) << endl;
+        }
+        auto record = shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile));
+        this->records.push_back(record);
+    }
+    
 }
 
 int32_t ShapeFile::getFileCode() {

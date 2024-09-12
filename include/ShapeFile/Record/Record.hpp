@@ -14,6 +14,7 @@ namespace Records {
 
         long readHeader(FILE *shapeFile);
     public:
+        Record(FILE *shapefile);
         virtual ~Record();
 
         int32_t getNumber();

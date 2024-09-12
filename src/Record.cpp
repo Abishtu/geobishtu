@@ -8,15 +8,23 @@
 using namespace std;
 using namespace Records;
 
+Record::Record(FILE *shapeFile) {
+    readHeader(shapeFile);
+}
+
 Record::~Record() {
-    
+
 }
 
 long Record::readHeader(FILE *shapeFile) {
     int32_t _number;
+    cerr << "End of File Before! " << feof(shapeFile) << endl;
     size_t err = fread(&_number, ESRI_INTEGER, 1, shapeFile);
+    cerr << "End of File After! " << feof(shapeFile) << endl;
     if (err != 1) {
-        cerr << "Failed to read record number" << endl;
+        cerr << "Failed to read record number at file position " << ftell(shapeFile) << endl;
+        cerr << err << endl;
+        cerr << "Is it EOF?: " << feof(shapeFile) << endl;
         exit(EXIT_FAILURE);
     }
     this->number = BIG_TO_LITTLE(_number);
