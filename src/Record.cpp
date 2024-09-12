@@ -8,8 +8,8 @@
 using namespace std;
 using namespace Records;
 
-Record::Record(FILE *shapeFile) {
-    this->readHeader(shapeFile);
+Record::~Record() {
+    
 }
 
 long Record::readHeader(FILE *shapeFile) {
@@ -38,4 +38,28 @@ int32_t Record::getLength() {
 
 int32_t Record::getNumber() {
     return this->number;
+}
+
+vector<double> Record::getBoundingBoxMax() {
+    return vector<double>{};
+}
+
+vector<double> Record::getBoundingBoxMin() {
+    return vector<double>{};
+}
+
+int32_t Record::getNumParts() {
+    return 0;
+}
+
+int32_t Record::getNumPoints() {
+    return 0;
+}
+
+vector<int32_t> Record::getParts() {
+    return vector<int32_t>{};
+}
+
+vector<Point> Record::getPoints() {
+    return vector<Point>{};
 }

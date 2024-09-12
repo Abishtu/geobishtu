@@ -6,7 +6,12 @@
 using namespace std;
 using namespace Records;
 
-PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
+PolyLine::~PolyLine() {
+    
+}
+
+PolyLine::PolyLine(FILE *shapeFile) : Record() {
+    readHeader(shapeFile);
     int32_t _shapeType;
     size_t err = fread(&_shapeType, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
@@ -17,7 +22,7 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
 
     vector<double> _boundingBoxMin;
     for (int bbMinCount = 0; bbMinCount < 2; bbMinCount++) {
-        int32_t boundingBox;
+        double boundingBox;
         err = fread(&boundingBox, ESRI_DOUBLE, 1, shapeFile);
         _boundingBoxMin.push_back(boundingBox);
     }
@@ -25,7 +30,7 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
 
     vector<double> _boundingBoxMax;
     for (int bbMinCount = 0; bbMinCount < 2; bbMinCount++) {
-        int32_t boundingBox;
+        double boundingBox;
         err = fread(&boundingBox, ESRI_DOUBLE, 1, shapeFile);
         _boundingBoxMax.push_back(boundingBox);
     }
@@ -55,7 +60,9 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
     }
 
     for (int pointCount = 0; pointCount < this->numPoints; pointCount++) {
-        this->points.push_back(Point(shapeFile));
+        Point point = Point(shapeFile);
+        // cout << point.getX() << ", " << point.getY() << endl;
+        this->points.push_back(point);
     }
 }
 

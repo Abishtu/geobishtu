@@ -36,19 +36,30 @@ int main()
 
     cout << "Records: " << endl << "\t";
 
-    for (Records::Record record : records) {
-        cout << "Record Number: " << record.getNumber() << "    Record Length: " << record.getLength() << endl << "\t";
-    }
-    cout << endl;
-
-    for (size_t i = 0; i < records.size(); i++) {
-        Records::Record object = records.at(i);
+    for (shared_ptr<Records::Record> record : records) {
+        cout << "Record Number: " << record->getNumber() << "    Record Length: " << record->getLength() << endl;
         
-        Records::PolyLine polyLine = reinterpret_cast<Records::PolyLine&>(object);
-        for (Records::Point point : polyLine.getPoints()) {
-            cout << "\t" << point.getX() << ", " << point.getY() << endl;
+        vector<double> recordBbMin = record->getBoundingBoxMin();
+        cout << "\tBounding Box Min: " << endl << "\t\t(";
+        for (double bbPoint : recordBbMin) {
+            cout << bbPoint << ", ";
+        }
+        cout << ")" << endl;
+
+        vector<double> recordBbMax = record->getBoundingBoxMax();
+        cout << "\tBounding Box Min: " << endl << "\t\t(";
+        for (double bbPoint : recordBbMax) {
+            cout << bbPoint << ", ";
+        }
+        cout << ")" << endl;
+
+        vector<Records::Point> points = record->getPoints();
+        cout << "\tPoints: " << endl;
+        for(Records::Point point : points) {
+            cout << "\t\t(" << point.getX() << ", " << point.getY() << ")" << endl;
         }
     }
+    cout << endl;
     
     return 0;
 }

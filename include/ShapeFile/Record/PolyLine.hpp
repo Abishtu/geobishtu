@@ -31,6 +31,8 @@ namespace Records {
                 vector<Point> points
             );
 
+            ~PolyLine();
+
             vector<double> getBoundingBoxMin();
             vector<double> getBoundingBoxMax();
 
@@ -38,7 +40,7 @@ namespace Records {
             int32_t getNumPoints();
 
             vector<int32_t> getParts();
-            vector<Point> getPoints(); 
+            vector<Point> getPoints();
     };
 }
 

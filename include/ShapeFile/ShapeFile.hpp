@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <ShapeFile/Record/Record.hpp>
 #include <Util.hpp>
@@ -41,15 +42,10 @@ class ShapeFile {
         vector<double> boundingBoxMin;
 
         // Content : len - 100
-        vector<Records::Record> records;
+        vector<shared_ptr<Records::Record>> records{};
     public:
         // Constructors
         ShapeFile(string filePath);
-        ShapeFile(
-            ShapeType _shapeType,
-            vector<vector<double>> boundingBox,
-            vector<Records::Record> _records
-        );
 
         // Getters
         int32_t getFileCode();
@@ -60,7 +56,7 @@ class ShapeFile {
 
         vector<double> getBoundingBoxMin();
         vector<double> getBoundingBoxMax();
-        vector<Records::Record> getRecords();
+        vector<shared_ptr<Records::Record>> getRecords();
 };
 
 #endif

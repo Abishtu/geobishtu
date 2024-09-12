@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 #include <ShapeFile/ShapeFile.hpp>
 #include <ShapeFile/Record/Record.hpp>
@@ -78,19 +79,10 @@ ShapeFile::ShapeFile(string filePath) {
     double bbMmax;
     err = fread(&bbMmax, ESRI_DOUBLE, 1, shapeFile);
     this->boundingBoxMax.push_back(bbMmax);
-    
     // int32_t contentLength = this->getLength() - ((int32_t)100);
-
-    this->records.push_back(Records::PolyLine(shapeFile));
-}
-
-ShapeFile::ShapeFile(ShapeType _shapeType,
-                     vector<vector<double>> boundingBox,
-                     vector<Records::Record> _records) {
-    this->shapeType = _shapeType;
-    this->boundingBoxMin = boundingBox[0];
-    this->boundingBoxMax = boundingBox[1];
-    this->records = _records;
+    this->records.push_back(
+        shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile))
+    );
 }
 
 int32_t ShapeFile::getFileCode() {
@@ -121,6 +113,6 @@ vector<double> ShapeFile::getBoundingBoxMax() {
     return this->boundingBoxMax;
 }
 
-vector<Records::Record> ShapeFile::getRecords() {
+vector<shared_ptr<Records::Record>> ShapeFile::getRecords() {
     return this->records;
 }
