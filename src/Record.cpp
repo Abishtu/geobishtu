@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 
+#include <ShapeFile/Exceptions/ShapeFileReadError.hpp>
 #include <ShapeFile/Record/Record.hpp>
 #include <Util.hpp>
 
@@ -18,22 +19,16 @@ Record::~Record() {
 
 long Record::readHeader(FILE *shapeFile) {
     int32_t _number;
-    cerr << "End of File Before! " << feof(shapeFile) << endl;
     size_t err = fread(&_number, ESRI_INTEGER, 1, shapeFile);
-    cerr << "End of File After! " << feof(shapeFile) << endl;
     if (err != 1) {
-        cerr << "Failed to read record number at file position " << ftell(shapeFile) << endl;
-        cerr << err << endl;
-        cerr << "Is it EOF?: " << feof(shapeFile) << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->number = BIG_TO_LITTLE(_number);
 
     int32_t _length;
     err = fread(&_length, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read record length" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->length = BIG_TO_LITTLE(_length);
 

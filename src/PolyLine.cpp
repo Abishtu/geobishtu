@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <ShapeFile/Exceptions/ShapeFileReadError.hpp>
 #include <ShapeFile/Record/PolyLine.hpp>
 #include <Util.hpp>
 
@@ -15,8 +16,7 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
     int32_t _shapeType;
     size_t err = fread(&_shapeType, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read shape type" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->shapeType = _shapeType;
 
@@ -39,14 +39,14 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
     int32_t _numParts;
     err = fread(&_numParts, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read the number of parts" << endl;
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->numParts = _numParts;
 
     int32_t _numPoints;
     err = fread(&_numPoints, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read the number of points" << endl;
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->numPoints = _numPoints;
 
@@ -54,8 +54,7 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
         int32_t part;
         err = fread(&part, ESRI_INTEGER, 1, shapeFile);
         if (err != 1) {
-            cerr << "Failed to read PolyLine part " << partCount + 1 << endl;
-            exit(EXIT_FAILURE); 
+            throw (ShapeFileExceptions::ReadError("File read error!"));
         }
     }
 

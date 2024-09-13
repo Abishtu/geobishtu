@@ -7,6 +7,7 @@
 #include <ShapeFile/ShapeFile.hpp>
 #include <ShapeFile/Record/Record.hpp>
 #include <ShapeFile/Record/PolyLine.hpp>
+#include <ShapeFile/Exceptions/ShapeFileReadError.hpp>
 #include <Util.hpp>
 
 using namespace std;
@@ -14,15 +15,13 @@ using namespace std;
 ShapeFile::ShapeFile(string filePath) {
     FILE *shapeFile = fopen(filePath.c_str(), "rb");
     if (shapeFile == NULL) {
-        cerr << "Failed to read file" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
 
     int32_t _fileCode;
     size_t err = fread(&_fileCode, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read file code" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
 
     // Skip to next position.
@@ -31,8 +30,7 @@ ShapeFile::ShapeFile(string filePath) {
     int32_t _fileLength;
     err = fread(&_fileLength, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read file length" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
 
     this->fileCode = BIG_TO_LITTLE(_fileCode);
@@ -41,16 +39,14 @@ ShapeFile::ShapeFile(string filePath) {
     int32_t _version;
     err = fread(&_version, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read version" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->version = _version;
 
     int32_t _shapeType;
     err = fread(&_shapeType, ESRI_INTEGER, 1, shapeFile);
     if (err != 1) {
-        cerr << "Failed to read shape type" << endl;
-        exit(EXIT_FAILURE);
+        throw (ShapeFileExceptions::ReadError("File read error!"));
     }
     this->shapeType = (ShapeType) _shapeType;
 
@@ -79,12 +75,19 @@ ShapeFile::ShapeFile(string filePath) {
     double bbMmax;
     err = fread(&bbMmax, ESRI_DOUBLE, 1, shapeFile);
     this->boundingBoxMax.push_back(bbMmax);
-    while(true) {
-        if (feof(shapeFile) == 1) {
-            cerr << "EOF Reached at " << ftell(shapeFile) << endl;
+    bool notEofOrError = true;
+    while(notEofOrError) {
+        try {
+            auto record = shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile));
+            this->records.push_back(record);
+        } catch (const ShapeFileExceptions::ReadError& exp) {
+            if (feof(shapeFile) != 1) {
+                cerr << exp.what() << endl;
+                exit(EXIT_FAILURE);
+            }
+
+            notEofOrError = false;
         }
-        auto record = shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile));
-        this->records.push_back(record);
     }
     
 }
