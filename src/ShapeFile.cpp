@@ -78,8 +78,53 @@ ShapeFile::ShapeFile(string filePath) {
     bool notEofOrError = true;
     while(notEofOrError) {
         try {
-            auto record = shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile));
-            this->records.push_back(record);
+            switch(this->shapeType) {
+                case NullShape: {
+                    break;
+                }
+                case Point: {
+                    break;
+                }
+                case PolyLine: {
+                    auto record = shared_ptr<Records::PolyLine>(new Records::PolyLine(shapeFile));
+                    this->records.push_back(record);
+                    break;
+                }
+                case Polygon: {
+                    break;
+                }
+                case MultiPoint:{
+                    break;
+                }
+                case PointZ: {
+                    break;
+                }
+                case PolyLineZ: {
+                    break;
+                }
+                case PolygonZ: {
+                    break;
+                }
+                case MultiPointZ: {
+                    break;
+                }
+                case PointM: {
+                    break;
+                }
+                case PolyLineM: {
+                    break;
+                }
+                case PolygonM: {
+                    break;
+                }
+                case MultiPointM: {
+                    break;
+                }
+                case MultiPatch: {
+                    break;
+                }
+            }
+            
         } catch (const ShapeFileExceptions::ReadError& exp) {
             if (feof(shapeFile) != 1) {
                 cerr << exp.what() << endl;
