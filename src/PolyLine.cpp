@@ -56,6 +56,7 @@ PolyLine::PolyLine(FILE *shapeFile) : Record(shapeFile) {
         if (err != 1) {
             throw (ShapeFileExceptions::ReadError("File read error!"));
         }
+        this->parts.push_back(part);
     }
 
     for (int pointCount = 0; pointCount < this->numPoints; pointCount++) {

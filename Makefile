@@ -7,3 +7,6 @@ run: run
 
 build: configure
 	cd build && cmake --build . && mv geobishtu ../bin/geobishtu
+
+clean:
+	rm bin/* && rm debug/*

@@ -52,6 +52,14 @@ int main()
             cout << bbPoint << ", ";
         }
         cout << ")" << endl;
+        
+        vector<int32_t> parts = record->getParts();
+        cout << "\tParts: " << endl;
+        cout << "\t\t[";
+        for (int32_t part : parts) {
+            cout << part << ", ";
+        }
+        cout << "]" << endl;
 
         vector<Records::Point> points = record->getPoints();
         cout << "\tPoints: " << endl;
