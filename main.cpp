@@ -21,41 +21,12 @@ int main(int argc, char** argv)
 
     for (shared_ptr<Records::Record> record : records)
     {
-        cout << "Record Number: " << record->getNumber() << "    Record Length: " << record->getLength() << endl;
-
-        vector<double> recordBbMin = record->getBoundingBoxMin();
-        cout << "\tBounding Box Min: " << endl << "\t\t(";
-        for (double bbPoint : recordBbMin)
-        {
-            cout << bbPoint << ", ";
-        }
-        cout << ")" << endl;
-
-        vector<double> recordBbMax = record->getBoundingBoxMax();
-        cout << "\tBounding Box Min: " << endl << "\t\t(";
-        for (double bbPoint : recordBbMax)
-        {
-            cout << bbPoint << ", ";
-        }
-        cout << ")" << endl;
-
-        vector<int32_t> parts = record->getParts();
-        cout << "\tParts: " << endl;
-        cout << "\t\t[";
-        for (int32_t part : parts)
-        {
-            cout << part << ", ";
-        }
-        cout << "]" << endl;
-
         vector<Records::Point> points = record->getPoints();
-        cout << "\tPoints: " << endl;
         for (Records::Point point : points)
         {
-            cout << "\t\t(" << point.getX() << ", " << point.getY() << ")" << endl;
+            cout << point.getX() << "," << point.getY() << endl;
         }
     }
-    cout << endl;
 
     return EXIT_SUCCESS;
 }
