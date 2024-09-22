@@ -14,8 +14,14 @@ int main(int argc, char** argv)
     }
 
     string fileName = string(argv[1]);
+    int scale = atoi(argv[2]);
 
     ShapeFile shapeFile = ShapeFile(fileName);
+
+    vector<double> boundingBoxMax = shapeFile.getBoundingBoxMax();
+    vector<double> boundingBoxMin = shapeFile.getBoundingBoxMin();
+    double horizonatalOffset = boundingBoxMax[0] - boundingBoxMin[0];
+    double verticalOffset = boundingBoxMax[1] - boundingBoxMin[1];
 
     vector<shared_ptr<Records::Record>> records = shapeFile.getRecords();
 
@@ -24,7 +30,7 @@ int main(int argc, char** argv)
         vector<Records::Point> points = record->getPoints();
         for (Records::Point point : points)
         {
-            cout << point.getX() << "," << point.getY() << endl;
+            cout << ((boundingBoxMax[0] - point.getX()) - horizonatalOffset/2) * -scale << "," << ((boundingBoxMax[1] - point.getY()) - verticalOffset/2) * -scale << endl;
         }
     }
 
