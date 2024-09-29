@@ -6,8 +6,7 @@
 
 using namespace std;
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     if(argc < 2) {
         cerr << "Please provide file name" << endl;
         exit(EXIT_FAILURE);
@@ -28,9 +27,14 @@ int main(int argc, char** argv)
     for (shared_ptr<Records::Record> record : records)
     {
         vector<Records::Point> points = record->getPoints();
-        for (Records::Point point : points)
-        {
-            cout << ((boundingBoxMax[0] - point.getX()) - horizonatalOffset/2) * -scale << "," << ((boundingBoxMax[1] - point.getY()) - verticalOffset/2) * -scale << endl;
+        for (size_t i = 0; i < points.size()-1; i++) {
+            Records::Point point1 = points[i];
+            Records::Point point2 = points[++i];
+
+            cout << "line:";
+            cout << ((boundingBoxMax[0] - point1.getX()) - horizonatalOffset/2) * -scale << "," << ((boundingBoxMax[1] - point1.getY()) - verticalOffset/2) * -scale;
+            cout << ";";
+            cout << ((boundingBoxMax[0] - point2.getX()) - horizonatalOffset/2) * -scale << "," << ((boundingBoxMax[1] - point2.getY()) - verticalOffset/2) * -scale << endl;
         }
     }
 
